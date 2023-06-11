@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace绑定一个对应的Mapper接口-->
+<mapper namespace="com.ecjtu.dao.RoleMapper">
+    <!--获取所有的角色权限对象-->
+    <select id="getAllRole" resultType="role">
+        select * from hotel_role
+    </select>
+    <!--新增角色-->
+    <insert id="addRole" parameterType="role">
+      insert into hotel_role values (null,#{name})
+    </insert>
+    <!--更新角色-->
+    <update id="updateRole" parameterType="role">
+        update hotel_role
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+</mapper>

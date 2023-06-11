@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace绑定一个对应的Mapper接口-->
+<mapper namespace="com.ecjtu.dao.RecardMapper">
+    <select id="getFreeRoom" resultType="room">
+        select * from hotel_room where state ="空闲"
+    </select>
+    <insert id="openRoom" parameterType="recard">
+      insert into hotel_recard  (name,idcard,roomid,roomtype,Stime) values (#{name},#{idcard},#{roomid},#{roomtype},#{stime})
+    </insert>
+    <update id="update" parameterType="room">
+        update hotel_room set state="居住" where roomid = #{roomid}
+    </update>
+    <select id="getRecard" resultType="recard">
+    select r1.* from hotel_recard r1, hotel_room r2 WHERE r1.roomid = r2.roomid  and r2.state = "居住"
+    </select>
+    <update id="checkOut" parameterType="recard">
+        update hotel_recard set Etime = #{Etime} where roomid = #{roomid} and Stime = #{stime}
+    </update>
+    <update id="Change" parameterType="room">
+        update hotel_room set state="空闲" where roomid = #{roomid}
+    </update>
+</mapper>

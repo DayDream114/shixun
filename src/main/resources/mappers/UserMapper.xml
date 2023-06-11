@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace绑定一个对应的Mapper接口-->
+<mapper namespace="com.ecjtu.dao.UserMapper">
+    <resultMap id="userMap" type="user">
+        <id column="id" property="id"></id>
+        <result column="username" property="username"></result>
+        <result column="password" property="password"></result>
+        <result column="tel" property="tel"></result>
+<!--        <result column="role" property="role"></result>-->
+        <result column="name" property="role"></result>
+    </resultMap>
+    <select id="findUserByNameAndPsw"
+            resultType="user" resultMap="userMap">
+        select * from hotel_user h1,hotel_role h2 where username=#{username} and
+        password=#{password} and h1.role = h2.id
+    </select>
+    <!--模糊查询-->
+    <select id="findUserByUser" resultType="user" resultMap="userMap">
+        select * from hotel_user h1,hotel_role h2
+        where h1.role=h2.id
+        <if test="id!=0">
+            and id = #{id}
+        </if>
+        <if test="username!=null and username!=''">
+            and username like '%${username}%'
+        </if>
+        <if test="password!=null and password!=''">
+            and password like '%${password}%'
+        </if>
+        <if test="tel!=null and tel!=''">
+            and tel like '%${tel}%'
+        </if>
+        <if test="role!=0 and role!=null and role!=''">
+            and role = #{role}
+        </if>
+    </select>
+    <!--新增用户-->
+    <insert id="addUser" parameterType="user">
+      insert into hotel_user values (null,#{username},#{password},
+      #{tel},#{role})
+    </insert>
+    <!--删除用户-->
+    <delete id="deleteUserById">
+        delete from hotel_user where id = #{id}
+    </delete>
+    <update id="updateUserByUser" parameterType="user">
+        update hotel_user
+        <set>
+            <if test="username != null and username != ''">
+                username = #{username},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="tel != null and tel != ''">
+                tel = #{tel},
+            </if>
+            <if test="role != null and role != ''">
+                role = #{role}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+    <!--查询单个用户-->
+    <select id="getUserById" resultType="user" resultMap="userMap">
+        select * from hotel_user where id = #{id}
+    </select>
+    <!--批量删除-->
+    <delete id="deleteBatch">
+        delete from hotel_user where id in
+        <foreach collection="ids" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace绑定一个对应的Mapper接口-->
+<mapper namespace="com.ecjtu.dao.RoomMapper">
+    <resultMap id="roomMap" type="room">
+        <id column="roomid" property="roomid"></id>
+        <result column="roomtype" property="roomtype"></result>
+        <result column="price" property="price"></result>
+        <result column="state" property="state"></result>
+    </resultMap>
+    <select id="getAllRoom" resultType="room">
+        select * from hotel_room
+    </select>
+    <!--模糊查询-->
+    <select id="findRoomByRoom" resultType="room" resultMap="roomMap">
+        select * from hotel_room
+        where 1>0
+        <if test="roomid!='' and roomid!=null">
+          and  roomid = #{roomid}
+        </if>
+        <if test="roomtype!=null and roomtype!=''">
+            and roomtype = #{roomtype}
+        </if>
+        <if test="state!=null and state!=''">
+            and state = #{state}
+        </if>
+    </select>
+
+    <!--新增用户-->
+    <insert id="addRoom" parameterType="room">
+      insert into hotel_room values (#{roomid},#{roomtype},
+      #{price},#{state})
+    </insert>
+    <!--删除用户-->
+    <delete id="deleteRoom">
+        delete from hotel_room where roomid = #{roomid}
+    </delete>
+    <update id="updateRoom" parameterType="room">
+        update hotel_room
+        <set>
+            <if test="roomtype != null and roomtype != ''">
+                roomtype = #{roomtype},
+            </if>
+            <if test="price != null and price != ''">
+                price = #{price},
+            </if>
+        </set>
+        WHERE roomid = #{roomid}
+    </update>
+    <select id="getRoom" resultType="room" resultMap="roomMap">
+        select * from hotel_room where roomid = #{roomid}
+    </select>
+</mapper>

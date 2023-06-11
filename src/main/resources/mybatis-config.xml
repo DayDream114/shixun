@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<!--是否开启全局二级缓存-->
+		<setting name="cacheEnabled" value="true"/>
+		<!-- 是否在控制台打印日志 -->
+		<setting name="logImpl" value="STDOUT_LOGGING" />
+	</settings>
+
+	<!--类的别名配置区域-->
+	<typeAliases>
+		<!--单独对某个类设置 alias属性可以不写，默认为类名，不区分大小写-->
+		<!--<typeAlias type="com.seecen.pojo.User" alias="user"></typeAlias>-->
+		<!--配置扫描某个包中的类,结合 @Alias注解使用,此包中有注解的都会用注解的别名-->
+		<package name="com.ecjtu.pojo"/>
+	</typeAliases>
+	<!-- 配置分页插件 -->
+	<plugins>
+		<plugin interceptor="com.github.pagehelper.PageInterceptor">
+		</plugin>
+	</plugins>
+</configuration>

@@ -1,0 +1,14 @@
+{
+	"cmsName": "layuiCMS后台管理模版",
+	"version": "v2.0",
+	"author": "tyy",
+	"homePage": "index.html",
+	"server": "windows",
+	"dataBase": "8.00.2039",
+	"maxUpload": "2M",
+	"userRights": "超级管理员",
+	"description": "这是一套基于layui的cms模版，纯静态页面，不包含数据库",
+	"powerby": "copyright @2017 思诚科技",
+	"record": "京ICP备14040xxx号-1",
+	"keywords": "layuicms,layuicms2.0,后台模版,思诚科技"
+}
